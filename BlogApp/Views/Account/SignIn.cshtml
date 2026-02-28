@@ -1,0 +1,15 @@
+﻿@using BlogApp.Dtos
+@{
+    ViewBag.Title = "SignIn";
+}
+
+@model UserSignInDto;
+
+<div asp-validation-summary="All"></div>
+
+<form asp-action="SignIn" method="post">
+    <input asp-for="Name" placeholder="Name of email" />
+    <input asp-for="Password" type="password" placeholder="Password" />
+
+    <button type="submit" class="btn btn-primary">Sign in</button>
+</form>

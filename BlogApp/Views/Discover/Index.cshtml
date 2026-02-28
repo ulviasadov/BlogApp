@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Discover";
+}
+
+@model List<Blog>;
+
+<h1 class="container">Hello form discover!</h1>
+
+    @{
+        foreach (var blog in Model)
+        {
+            <div class="container w-25 mb-1" style="border: 1px solid black; border-radius: 8px;">
+                <div class="pt-1">
+                <h6>@blog.User!.UserName</h6>
+                </div>
+                <div style="border-bottom: 1px solid gray">
+                    <h4>@blog.Title</h4>
+                </div>
+                <div>
+                    <p>@blog.BodyText</p>
+                </div>
+            </div>
+        }
+    }
