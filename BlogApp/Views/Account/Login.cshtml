@@ -4,10 +4,10 @@
 }
 @model UserCreateDto;
 
-<main>
+<main class="container d-flex flex-column align-items-center">
     <div asp-validation-summary="All"></div>
 
-    <form asp-action="Login" method="post">
+    <form asp-action="Login" method="post" class="d-flex flex-column w-25 gap-1">
         <input asp-for="Name" placeholder="Name" />
         <input asp-for="Email" placeholder="Email" />
         <input asp-for="Password" type="password" placeholder="Password" />
@@ -15,5 +15,5 @@
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
 
-    <p>Do you already hava an account? <span><a asp-action="SignIn">Sign in</a></span></p>
+    <p>Do you already hava an account? <span><a asp-action="SignUp">Sign up</a></span></p>
 </main>

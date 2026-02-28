@@ -46,10 +46,10 @@ namespace BlogApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult SignIn() => View();
+        public IActionResult SignUp() => View();
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(UserSignInDto model)
+        public async Task<IActionResult> SignUp(UserSignInDto model)
         {
             if (!ModelState.IsValid)
                 return View(model);

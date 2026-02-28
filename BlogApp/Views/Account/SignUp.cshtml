@@ -1,0 +1,19 @@
+﻿@using BlogApp.Dtos
+@{
+    ViewBag.Title = "Sign up";
+}
+
+@model UserSignInDto;
+
+<div class="container d-flex flex-column align-items-center">
+    <div asp-validation-summary="All"></div>
+    
+    <form asp-action="SignUp" method="post" class="d-flex flex-column w-25 gap-1">
+        <input asp-for="Name" placeholder="Name of email" />
+        <input asp-for="Password" type="password" placeholder="Password" />
+    
+        <button type="submit" class="btn btn-primary">Sign up</button>
+    </form>
+
+    <p>Do you not hava any accounts? <span><a asp-action="Login">Login</a></span></p>
+</div>
