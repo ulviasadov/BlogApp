@@ -20,7 +20,7 @@ namespace BlogApp
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"))
             );
 
-            builder.Services.AddIdentity<User,  IdentityRole>(options =>
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
             })

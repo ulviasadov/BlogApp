@@ -2,8 +2,8 @@
 using BlogApp.Dtos;
 using BlogApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BlogApp.Controllers
 {
@@ -11,10 +11,12 @@ namespace BlogApp.Controllers
     public class PostController : Controller
     {
         private readonly AppDbContext _dbContext;
+        private readonly UserManager<User> _userManager;
 
-        public PostController(AppDbContext dbContext)
+        public PostController(AppDbContext dbContext, UserManager<User> userManager)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -26,7 +28,10 @@ namespace BlogApp.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _userManager.GetUserId(User);
+
+            if (userId is null)
+                return Unauthorized();
 
             var blog = new Blog
             {
