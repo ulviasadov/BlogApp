@@ -10,11 +10,13 @@ namespace BlogApp.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IWebHostEnvironment _enviroment;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment enviroment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _enviroment = enviroment;
         }
 
         [HttpGet]
@@ -26,10 +28,39 @@ namespace BlogApp.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            string? ImageUrl = null;
+
+            if (model.ImageFile is not null && model.ImageFile.Length > 0)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+
+                var extension = Path.GetExtension(model.ImageFile.FileName).ToLower();
+
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("ImageFile", "Only .jpg, .jpeg and .png files are allowed.");
+                    return View(model);
+                }
+
+                var fileName = Guid.NewGuid().ToString() + extension;
+                var folderPath = Path.Combine(_enviroment.WebRootPath, "images", "users");
+
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+
+                var filePath = Path.Combine(folderPath, fileName);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await model.ImageFile.CopyToAsync(stream);
+
+                ImageUrl = $"/images/users/{fileName}";
+            }
+
             var user = new User()
             {
                 UserName = model.Name,
                 Email = model.Email,
+                ImageUrl = ImageUrl,
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -42,6 +73,7 @@ namespace BlogApp.Controllers
                 return View(model);
             }
 
+            await _signInManager.SignInAsync(user, isPersistent: false);
             return RedirectToAction("Index", "Home");
         }
 

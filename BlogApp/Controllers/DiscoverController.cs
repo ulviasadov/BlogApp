@@ -18,7 +18,18 @@ namespace BlogApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var data = await _db.Blogs.Include(b => b.User).ToListAsync();
+            var data = await _db.Blogs
+                .OrderByDescending(b => b.Id)
+                .Select(b => new BlogDto
+            {
+                UserName = b.User!.UserName!,
+                ImageUrl = b.User!.ImageUrl != null
+                    ? b.User.ImageUrl
+                    : "/images/default-avatar-profile-icon.jpg",
+                Title = b.Title!,
+                BodyText = b.BodyText!
+            })
+                .ToListAsync();
 
             if(data is null)
                 return NotFound();

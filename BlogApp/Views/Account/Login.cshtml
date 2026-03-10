@@ -7,7 +7,8 @@
 <main class="container d-flex flex-column align-items-center">
     <div asp-validation-summary="All"></div>
 
-    <form asp-action="Login" method="post" class="d-flex flex-column w-25 gap-1">
+    <form asp-action="Login" method="post" enctype="multipart/form-data" class="d-flex flex-column w-25 gap-1">
+        <input asp-for="ImageFile" type="file" />
         <input asp-for="Name" placeholder="Name" />
         <input asp-for="Email" placeholder="Email" />
         <input asp-for="Password" type="password" placeholder="Password" />

@@ -4,6 +4,8 @@ namespace BlogApp.Dtos
 {
     public class UserCreateDto
     {
+        public IFormFile? ImageFile { get; set; }
+
         [Required]
         public required string Name { get; set; }
 
