@@ -20,10 +20,10 @@ namespace BlogApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login() => View();
+        public IActionResult Register() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserCreateDto model)
+        public async Task<IActionResult> Register(UserCreateDto model)
         {
             if (!ModelState.IsValid)
                 return View(model);
