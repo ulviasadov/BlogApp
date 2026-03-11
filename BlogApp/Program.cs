@@ -27,6 +27,17 @@ namespace BlogApp
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("react", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -40,6 +51,7 @@ namespace BlogApp
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseCors();
             app.UseStaticFiles();
 
             app.UseAuthentication();
