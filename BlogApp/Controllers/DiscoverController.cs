@@ -22,6 +22,7 @@ namespace BlogApp.Controllers
                 .OrderByDescending(b => b.Id)
                 .Select(b => new BlogDto
             {
+                    Id = b.Id,
                 UserName = b.User!.UserName!,
                 ImageUrl = b.User!.ImageUrl != null
                     ? b.User.ImageUrl

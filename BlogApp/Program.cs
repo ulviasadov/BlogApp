@@ -13,6 +13,7 @@ namespace BlogApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddControllers();
 
             builder.Services.AddAuthorization();
 
@@ -51,13 +52,15 @@ namespace BlogApp
             app.UseHttpsRedirection();
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors("react");
             app.UseStaticFiles();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
+            app.MapControllers();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")

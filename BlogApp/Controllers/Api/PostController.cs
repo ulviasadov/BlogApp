@@ -10,11 +10,11 @@ namespace BlogApp.Controllers.Api
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PostsController : ControllerBase
+    public class PostController : ControllerBase
     {
         private readonly AppDbContext _db;
 
-        public PostsController(AppDbContext db)
+        public PostController(AppDbContext db)
         {
             _db = db;
         }
@@ -27,6 +27,7 @@ namespace BlogApp.Controllers.Api
                 .OrderByDescending(x => x.Id)
                 .Select(x => new BlogDto
                 {
+                    Id = x.Id,
                     UserName = x.User!.UserName!,
                     ImageUrl = x.User.ImageUrl ?? "/images/default-avatar-profile-icon.jpg",
                     Title = x.Title!,

@@ -37,7 +37,7 @@ namespace BlogApp.Controllers.Api
                 if (!allowedExtensions.Contains(extension))
                 {
                     ModelState.AddModelError("ImageFile", "Only .jpg, .jpeg and .png files are allowed.");
-                    return Ok(model);
+                    return BadRequest();
                 }
 
                 var fileName = Guid.NewGuid().ToString() + extension;
@@ -56,6 +56,7 @@ namespace BlogApp.Controllers.Api
 
             var user = new User
             {
+                ImageUrl = ImageUrl,
                 UserName = model.Name,
                 Email = model.Email
             };
@@ -77,10 +78,12 @@ namespace BlogApp.Controllers.Api
                 return BadRequest(ModelState);
 
             var user = await _userManager.FindByNameAsync(model.Name);
+
             if (user == null)
                 return Unauthorized(new { message = "Invalid username or password" });
 
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
             if (!result.Succeeded)
                 return Unauthorized(new { message = "Invalid username or password" });
 

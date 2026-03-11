@@ -34,16 +34,18 @@ function DiscoverPage() {
   }
 
   return (
-    <div>
-      <h2>Discover Posts</h2>
-
+    <div className="blogs">
       {posts.length === 0 ? (
         <p>No posts found.</p>
       ) : (
         posts.map((post) => (
-          <div key={post.id}>
-            <h3>{post.userName}</h3>
+          <div key={post.id} className="blog-container">
+            <div className="user-info">
+              <img src={`http://localhost:5033${post.imageUrl}`} alt="Profile picture" className="profile-picture" />
+              <h5>{post.userName}</h5>
+            </div>
             <h4>{post.title}</h4>
+            <hr />
             <p>{post.bodyText}</p>
           </div>
         ))
